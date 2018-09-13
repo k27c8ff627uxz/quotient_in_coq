@@ -1,8 +1,8 @@
 
 Require Import Coq.Relations.Relation_Definitions.
 Require Import Coq.Classes.Equivalence.
-Require Import Quotient.quotient.
-Require Import Quotient.Construction.function_util.
+
+From Quotient Require Import function_util quotient.
 Open Scope equiv_scope.
 
 Section Coequalizer.

@@ -2,7 +2,7 @@ Require Import Coq.Relations.Relation_Definitions.
 Require Export Coq.Classes.SetoidClass.
 Require Import Coq.Classes.Equivalence.
 
-Require Import Quotient.quotient.
+From Quotient Require Import function_util quotient.
 From Quotient.Construction Require Import function_util power equalizer coequalizer construction_of_equalizer.
 
 Open Scope equiv_scope.
