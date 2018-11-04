@@ -3,8 +3,8 @@ Require Export Coq.Logic.ClassicalFacts.
 Require Import Coq.Classes.Equivalence.
 Require Import Coq.Logic.EqdepFacts.
 
-Require Import Quotient.function_util.
-Require Import Quotient.Construction.equalizer.
+Require Import Quotient.Set.function_util.
+Require Import Quotient.Set.Construction.equalizer.
 
 Open Scope equiv_scope.
 
