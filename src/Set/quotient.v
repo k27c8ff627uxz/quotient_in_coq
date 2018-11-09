@@ -12,21 +12,16 @@ Section Quotient.
   Variable rel : relation A.
   Variable eqA : Equivalence rel.
 
-  Record isQuotient (X : Set) (proj : A -> X) :=
-    {
-      quotient_comp : forall (x y : A), x === y -> proj x = proj y;
-
-      quotient_proj_epi : epi proj;
-
-      quotient_factor : forall {B : Set} (f : A -> B), Proper ( equiv ==> eq ) f -> { f' : X -> B | f === f_comp f' proj }
-    }.
-
   Record quotient :=
     {
-      quotient_type :>  Set;
-      quotient_proj :> A -> quotient_type;
+      q_type :  Set;
+      q_proj : A -> q_type;
 
-      quotient_isQuotient : isQuotient quotient_type quotient_proj
+      (* conditions *)
+      quotient_comp : forall (x y : A), x === y -> q_proj x = q_proj y;
+      quotient_proj_epi : epi q_proj;
+      quotient_factor : forall {B : Set} (f : A -> B), Proper ( equiv ==> eq ) f -> { f' : q_type -> B | f === f_comp f' q_proj }
+
     }.
   
 End Quotient.

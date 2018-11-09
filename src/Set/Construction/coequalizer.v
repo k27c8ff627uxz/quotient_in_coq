@@ -174,7 +174,6 @@ Proof.
   unfold f_comp in cuniv.
   set (fun p => (fst p) === (snd p)) as P.
   exists X proj.
-  split.
   {
     intros a1 a2 eqa.
     assert(eqa' : P (a1, a2)).

@@ -17,18 +17,18 @@ Section Power.
 
   Context {instance_power_exists : axiom_power_exists}.
 
-  Definition power (A : Set) : Set := quotient_type _ _ _ (proof_power_exists A).
-  Definition to_power {A : Set} : (A -> bool) -> power A := quotient_proj _ _ _ (proof_power_exists A).
+  Definition power (A : Set) : Set := q_type _ _ _ (proof_power_exists A).
+  Definition to_power {A : Set} : (A -> bool) -> power A := q_proj _ _ _ (proof_power_exists A).
 
   Lemma epi_to_power {A} : epi (@to_power A).
   Proof.
-    apply (quotient_proj_epi _ _ _ _ _ (quotient_isQuotient _ _ _ (proof_power_exists A))).
+    apply quotient_proj_epi.
   Qed.
 
   Global Instance to_power_Proper {A} : Proper (equiv ==> eq) (@to_power A).
   Proof.
     intros f1 f2.
-    apply (quotient_comp _ _ _ _ _ (quotient_isQuotient _ _ _ (proof_power_exists A))).
+    apply quotient_comp.
   Qed.
   
   Section Power_Univ.
@@ -39,7 +39,7 @@ Section Power.
     Variable F_proper : Proper (equiv ==> eq) F.
     
     Definition power_quotient_sig : {f : (power A) -> T | F === f_comp f to_power} :=
-      (quotient_factor _ _ _ _ _ (quotient_isQuotient _ _ _ (proof_power_exists A)))
+      (quotient_factor _ _ _ (proof_power_exists A))
         F F_proper.
 
     Definition power_quotient_f : (power A) -> T := proj1_sig power_quotient_sig.
