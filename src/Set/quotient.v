@@ -31,17 +31,4 @@ Section Quotient.
   
 End Quotient.
 
-Section QuotientUtil.
-
-  Context {A : Set}.
-  Context {rel : relation A}.
-  Context {eqA : Equivalence rel}.
-  Variable X : Set.
-  Variable proj : A -> X.
-
-  Variable isQT : isQuotient A rel eqA X proj.
-    
-
-End QuotientUtil.
-
 Definition quotient_exists := forall (A : Set) (rel : relation A) (eqA : Equivalence rel), quotient A rel eqA.
