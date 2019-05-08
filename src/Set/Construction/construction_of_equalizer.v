@@ -81,7 +81,7 @@ Section EqualizerExists.
       unfold CEqualizer_fun.
       unfold f_comp.
       simpl.
-      apply fequiv_eta.
+      reflexivity.
     Qed.
     
     Lemma CEqualizer_factor_unq : forall u', g' === f_comp CEqualizer_fun u' -> u' === CEqualizer_factor.

@@ -7,7 +7,7 @@ From Quotient.Set.Construction Require Import equalizer coequalizer.
 
 Open Scope equiv_scope.
 
-Definition power_exists := forall A, quotient _ _ (function_eq A bool).
+Definition power_exists := forall (A : Set), quotient (A -> bool) _ (@pointwise_equivalence A _ eq _).
 Class axiom_power_exists :=
   {
     proof_power_exists :> power_exists

@@ -5,54 +5,6 @@ Require Export Coq.Classes.Equivalence.
 
 Open Scope equiv_scope.
 
-Section FunctionEquivalence.
-
-  Context {A B : Set}.
-  
-  Definition function_equiv : relation (A -> B) :=
-    (fun f g => forall a, f a = g a).
-
-  Instance function_equiv_Reflexive : Reflexive function_equiv.
-  Proof.
-    intro f.
-    intro a.
-    reflexivity.
-  Qed.
-
-  Instance function_equiv_Symmetric : Symmetric function_equiv.
-  Proof.
-    intros f1 f2.
-    unfold function_equiv.
-    intro e1.
-    intro a.
-    symmetry.
-    apply e1.
-  Qed.
-
-  Instance function_equiv_Transitive : Transitive function_equiv.
-  Proof.
-    intros f1 f2 f3.
-    unfold function_equiv.
-    intros e1 e2.
-    intro a.
-    transitivity (f2 a).
-    apply e1.
-    apply e2.
-  Qed.
-
-  Program Instance function_equiv_Equivalence : Equivalence function_equiv.
-
-  Lemma fequiv_eta : forall (f : A -> B), f === (fun a => f a).
-  Proof.
-    intros f.
-    intro a.
-    reflexivity.
-  Qed.  
-    
-End FunctionEquivalence.
-
-Global Instance function_eq (A B : Set) : Equivalence (@function_equiv A B) := function_equiv_Equivalence.
-
 
 Section Composition.
 
