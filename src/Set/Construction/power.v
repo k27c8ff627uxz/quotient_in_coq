@@ -25,7 +25,7 @@ Section Power.
     apply quotient_proj_epi.
   Qed.
 
-  Global Instance to_power_Proper {A} : Proper (equiv ==> eq) (@to_power A).
+  Global Instance to_power_Proper {A} : Proper (Equivalence.equiv ==> eq) (@to_power A).
   Proof.
     intros f1 f2.
     apply quotient_comp.
@@ -36,7 +36,7 @@ Section Power.
     Variable A : Set.
     Variable T : Set.
     Variable F : (A -> bool) -> T.
-    Variable F_proper : Proper (equiv ==> eq) F.
+    Variable F_proper : Proper (Equivalence.equiv ==> eq) F.
     
     Definition power_quotient_sig : {f : (power A) -> T | F === f_comp f to_power} :=
       (quotient_factor _ _ _ (proof_power_exists A))
@@ -52,7 +52,7 @@ Section Power.
     Context {A : Set}.
     Definition app_bool_inv : A -> (A -> bool) -> bool := fun a f => f a.
     
-    Lemma app_bool_inv_proper : forall a, Proper (equiv ==> eq) (app_bool_inv a).
+    Lemma app_bool_inv_proper : forall a, Proper (Equivalence.equiv ==> eq) (app_bool_inv a).
     Proof.
       intro a.
       intros p1 p2 eqp.
@@ -112,7 +112,7 @@ Section Power.
     Definition power_epsilon (A : Set) : A -> power (power A) :=
       fun a => to_power (fun pa => (of_power pa) a).
     
-    Global Instance power_f_Proper {A B : Set} : Proper ( equiv ==> equiv ) (@power_f A B).
+    Global Instance power_f_Proper {A B : Set} : Proper ( Equivalence.equiv ==> Equivalence.equiv ) (@power_f A B).
     Proof.
       intros f1 f2 eqf.
       intro pb.
