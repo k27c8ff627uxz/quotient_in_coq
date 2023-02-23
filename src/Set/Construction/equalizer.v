@@ -5,30 +5,30 @@ Open Scope equiv_scope.
 
 Section Equalizer.
 
-  Context {A : Set}.
-  Context {B : Set}.
+  Context {A : Type}.
+  Context {B : Type}.
 
   Variable (f1 f2 : B -> A).
 
-  Record isEqualizer {C : Set} (g : C -> B) :=
+  Record isEqualizer {C : Type} (g : C -> B) :=
     {
       equalizer_equal : (f_comp f1 g) === (f_comp f2 g);
 
       equalizer_univ :
-        forall {C' : Set} (g' : C' -> B),
+        forall {C' : Type} (g' : C' -> B),
           (f_comp f1 g') === (f_comp f2 g') ->
           { u : C' -> C | g' === (f_comp g u) /\ (forall u' : C' -> C, g' === (f_comp g u') -> u' === u) }
     }.
        
   Record equalizer :=
     {
-      equalizer_set :> Set;
+      equalizer_set :> Type;
       equalizer_fun :> equalizer_set -> B;
 
       equalizer_isequalizer : isEqualizer equalizer_fun
     }.
 
-  Lemma equalizer_mono : forall {C : Set} (g : C -> B), isEqualizer g -> mono g.
+  Lemma equalizer_mono : forall {C : Type} (g : C -> B), isEqualizer g -> mono g.
   Proof.
     intros C g isE.
     destruct isE as [eeq euniv].
@@ -70,7 +70,7 @@ Section Equalizer.
 End Equalizer.
 
 Lemma isEqualizer_symmetry :
-  forall {A B C : Set} (f1 f2 : B -> A) (g : C -> B),
+  forall {A B C : Type} (f1 f2 : B -> A) (g : C -> B),
     isEqualizer f1 f2 g -> isEqualizer f2 f1 g.
 Proof.
   intros A B C f1 f2 g isH.
@@ -83,5 +83,5 @@ Proof.
   apply (isHunq _ _ eqH).
 Qed.
 
-Definition equalizer_exists := forall (B A : Set) (f1 f2 : B -> A), equalizer f1 f2.
+Definition equalizer_exists := forall (B A : Type) (f1 f2 : B -> A), equalizer f1 f2.
     

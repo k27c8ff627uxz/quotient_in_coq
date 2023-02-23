@@ -7,30 +7,30 @@ Open Scope equiv_scope.
 
 Section Coequalizer.
 
-  Context {A : Set}.
-  Context {B : Set}.
+  Context {A : Type}.
+  Context {B : Type}.
 
   Variable (f1 f2 : A -> B).
 
-  Record isCoequalizer {C : Set} (g : B -> C) :=
+  Record isCoequalizer {C : Type} (g : B -> C) :=
     {
       coequalizer_equal : (f_comp g f1) === (f_comp g f2);
 
       coequalizer_univ :
-        forall {C' : Set} (g' : B -> C'),
+        forall {C' : Type} (g' : B -> C'),
           (f_comp g' f1) === (f_comp g' f2) ->
           { u : C -> C' | g' === (f_comp u g) /\ (forall u' : C -> C', g' === (f_comp u' g) -> u' === u) }
     }.
        
   Record coequalizer :=
     {
-      coequalizer_set :> Set;
+      coequalizer_set :> Type;
       coequalizer_fun :> B -> coequalizer_set;
 
       coequalizer_iscoequalizer : isCoequalizer coequalizer_fun
     }.
 
-  Lemma coequalizer_epi : forall {C : Set} (g : B -> C), isCoequalizer g -> epi g.
+  Lemma coequalizer_epi : forall {C : Type} (g : B -> C), isCoequalizer g -> epi g.
   Proof.
     intros C g isC.
     destruct isC as [ceq cuniv].
@@ -72,7 +72,7 @@ Section Coequalizer.
 End Coequalizer.
 
 Lemma isCoequalizer_symmetry :
-  forall {A B C : Set} (f1 f2 : A -> B) (g : B -> C),
+  forall {A B C : Type} (f1 f2 : A -> B) (g : B -> C),
     isCoequalizer f1 f2 g -> isCoequalizer f2 f1 g.
 Proof.
   intros A B C f1 f2 g isH.
@@ -83,12 +83,12 @@ Proof.
   intros C' g' eqH.
   symmetry in eqH.
   apply (isHunq _ _ eqH).
-Qed.  
+Qed.
 
 Section SplitCoequalizer.
 
 
-  Record isSplitCoequalizer {A B C : Set} (f g : A -> B) (h : B -> C) :=
+  Record isSplitCoequalizer {A B C : Type} (f g : A -> B) (h : B -> C) :=
     {
       split_coequalizer_s : B -> A;
       split_coequalizer_t : C -> B;
@@ -100,7 +100,7 @@ Section SplitCoequalizer.
                      
     }.
 
-  Lemma splitcoequalizer_coequalizer : forall {A B C : Set} (f g : A -> B) (h : B -> C),
+  Lemma splitcoequalizer_coequalizer : forall {A B C : Type} (f g : A -> B) (h : B -> C),
       isSplitCoequalizer f g h -> isCoequalizer f g h.
   Proof.
     intros A B C f g h isH.
@@ -153,7 +153,7 @@ Section SplitCoequalizer.
 End SplitCoequalizer.
 
 
-Definition coequalizer_exists := forall (A B : Set) (f1 f2 : A -> B), coequalizer f1 f2.
+Definition coequalizer_exists := forall (A B : Type) (f1 f2 : A -> B), coequalizer f1 f2.
 
 Lemma coequalizer_exists__quotient_exists : coequalizer_exists -> quotient_exists.
 Proof.

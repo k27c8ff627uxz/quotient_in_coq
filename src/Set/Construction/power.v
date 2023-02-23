@@ -7,7 +7,7 @@ From Quotient.Set.Construction Require Import equalizer coequalizer.
 
 Open Scope equiv_scope.
 
-Definition power_exists := forall (A : Set), quotient (A -> bool) _ (@pointwise_equivalence A _ eq _).
+Definition power_exists := forall (A : Type), quotient (A -> bool) _ (@pointwise_equivalence A _ eq _).
 Class axiom_power_exists :=
   {
     proof_power_exists :> power_exists
@@ -17,8 +17,8 @@ Section Power.
 
   Context {instance_power_exists : axiom_power_exists}.
 
-  Definition power (A : Set) : Set := q_type _ _ _ (proof_power_exists A).
-  Definition to_power {A : Set} : (A -> bool) -> power A := q_proj _ _ _ (proof_power_exists A).
+  Definition power (A : Type) : Type := q_type _ _ _ (proof_power_exists A).
+  Definition to_power {A : Type} : (A -> bool) -> power A := q_proj _ _ _ (proof_power_exists A).
 
   Lemma epi_to_power {A} : epi (@to_power A).
   Proof.
@@ -33,8 +33,8 @@ Section Power.
   
   Section Power_Univ.
     
-    Variable A : Set.
-    Variable T : Set.
+    Variable A : Type.
+    Variable T : Type.
     Variable F : (A -> bool) -> T.
     Variable F_proper : Proper (Equivalence.equiv ==> eq) F.
     
@@ -49,7 +49,7 @@ Section Power.
 
   Section Power_of_power.
     
-    Context {A : Set}.
+    Context {A : Type}.
     Definition app_bool_inv : A -> (A -> bool) -> bool := fun a f => f a.
     
     Lemma app_bool_inv_proper : forall a, Proper (Equivalence.equiv ==> eq) (app_bool_inv a).
@@ -104,15 +104,15 @@ Section Power.
   Section Power_f.
     
     
-    (* power f := S \subset B |-> { a \in A | f(a) \in S } *)
-    Definition power_f {A B : Set} (f : A -> B) : (power B) -> (power A) :=
+    (* power f := S \subType B |-> { a \in A | f(a) \in S } *)
+    Definition power_f {A B : Type} (f : A -> B) : (power B) -> (power A) :=
       fun pb => to_power (fun a => (of_power pb) (f a)).
     
-    (* power_epsilon A := { S \subset A | a \in S } *)
-    Definition power_epsilon (A : Set) : A -> power (power A) :=
+    (* power_epsilon A := { S \subType A | a \in S } *)
+    Definition power_epsilon (A : Type) : A -> power (power A) :=
       fun a => to_power (fun pa => (of_power pa) a).
     
-    Global Instance power_f_Proper {A B : Set} : Proper ( Equivalence.equiv ==> Equivalence.equiv ) (@power_f A B).
+    Global Instance power_f_Proper {A B : Type} : Proper ( Equivalence.equiv ==> Equivalence.equiv ) (@power_f A B).
     Proof.
       intros f1 f2 eqf.
       intro pb.
@@ -126,7 +126,7 @@ Section Power.
     Qed.      
     
     Lemma power_f_comp_comm :
-      forall {A B C : Set} (f : B -> C) (g : A -> B),
+      forall {A B C : Type} (f : B -> C) (g : A -> B),
         power_f (f_comp f g) === f_comp (power_f g) (power_f f).
     Proof.
       intros A B C f g.
@@ -143,7 +143,7 @@ Section Power.
     Qed.
     
     Lemma power_f_id :
-      forall {A : Set},
+      forall {A : Type},
         power_f (@id A) === id.
     Proof.
       intro A.
@@ -157,7 +157,7 @@ Section Power.
     Qed.      
     
     Lemma power2_epsilon_natural :
-      forall {A B : Set} (f : A -> B),
+      forall {A B : Type} (f : A -> B),
         f_comp (power_epsilon B) f === f_comp (power_f (power_f f)) (power_epsilon A).
     Proof.
       intros A B f.
@@ -175,7 +175,7 @@ Section Power.
     Qed.
     
     Lemma triangle_power_f :
-      forall {A B C D : Set} (f : A -> B) (g : B -> D) (h : A -> C) (i : C -> D),
+      forall {A B C D : Type} (f : A -> B) (g : B -> D) (h : A -> C) (i : C -> D),
         f_comp g f === f_comp i h -> f_comp (power_f f) (power_f g) === f_comp (power_f h) (power_f i).
     Proof.
       intros A B C D f g h i eqH.
@@ -186,14 +186,14 @@ Section Power.
     Qed.
     
     Lemma principle_equalizer_eq :
-      forall {A : Set}, f_comp (power_epsilon (power (power A))) (power_epsilon A) === f_comp (power_f (power_f (power_epsilon A))) (power_epsilon A).
+      forall {A : Type}, f_comp (power_epsilon (power (power A))) (power_epsilon A) === f_comp (power_f (power_f (power_epsilon A))) (power_epsilon A).
     Proof.
       intro A.
       apply power2_epsilon_natural.
     Qed.      
     
     Lemma power_epsilon_unit_counit :
-      forall {A : Set},
+      forall {A : Type},
         f_comp (power_f (power_epsilon A)) (power_epsilon (power A)) === id.
     Proof.
       intro A.
@@ -212,7 +212,7 @@ Section Power.
   End Power_f.  
 
   (* empty *)
-  Definition empty_power (A : Set) : power A := to_power (fun a => false).
+  Definition empty_power (A : Type) : power A := to_power (fun a => false).
   Lemma empty_power_false : forall A a, of_power (empty_power A) a = false.
   Proof.
     intros A a.
@@ -220,7 +220,7 @@ Section Power.
     rewrite of_to_power_eq.
     reflexivity.
   Qed.
-  Lemma power_f_empty_eq_empty : forall {A B : Set} (f : A -> B), power_f f (empty_power B) === empty_power A.
+  Lemma power_f_empty_eq_empty : forall {A B : Type} (f : A -> B), power_f f (empty_power B) === empty_power A.
   Proof.
     intros A B f.
     apply power_extentionality.
@@ -232,7 +232,7 @@ Section Power.
   Qed.    
 
   (* subset *)
-  Definition subset {A : Set} (S1 S2 : power A) := forall a, of_power S1 a = true -> of_power S2 a = true.
+  Definition subset {A : Type} (S1 S2 : power A) := forall a, of_power S1 a = true -> of_power S2 a = true.
   Lemma subset_antisym : forall A (S1 S2 : power A), subset S1 S2 -> subset S2 S1 -> S1 = S2.
   Proof.
     unfold subset.
@@ -258,14 +258,14 @@ Section Power.
     
   (* Some Axioms *)
   Definition power_reflects_iso :=
-    forall (A B : Set) (f : A -> B),
+    forall (A B : Type) (f : A -> B),
       {Pg | isIsomorphism (power_f f) Pg} ->
       {g | isIsomorphism f g}.
   Definition power_f_faithful :=
-    forall (A B : Set) (f1 f2 : A -> B),
+    forall (A B : Type) (f1 f2 : A -> B),
       power_f f1 === power_f f2 -> f1 === f2.
   Definition preserve_reflexive_equalizer :=
-    forall (A B C : Set) (g : A -> B) (f1 f2 : B -> C) (d : C -> B),
+    forall (A B C : Type) (g : A -> B) (f1 f2 : B -> C) (d : C -> B),
       isEqualizer f1 f2 g ->
       (f_comp d f1 === id /\ f_comp d f2 === id) ->
       isCoequalizer (power_f f1) (power_f f2) (power_f g).

@@ -9,7 +9,7 @@ Open Scope equiv_scope.
 Section Composition.
 
   Section Composition_def.
-    Context {A B C : Set}.
+    Context {A B C : Type}.
 
     Definition f_comp (f : B -> C) (g : A -> B) : A -> C := fun a => f (g a).
   
@@ -26,7 +26,7 @@ Section Composition.
 
   End Composition_def.
 
-  Context {A B C D : Set}.
+  Context {A B C D : Type}.
   
   Lemma f_comp_assoc : forall (f : C -> D) (g : B -> C) (h : A -> B), f_comp (f_comp f g) h === f_comp f (f_comp g h).
   Proof.
@@ -34,8 +34,8 @@ Section Composition.
     reflexivity.
   Qed.
   
-  Definition mono (f : A -> B) := forall (X : Set) (u1 u2 : X -> A), f_comp f u1 === f_comp f u2 -> u1 === u2.
-  Definition epi (f : A -> B) := forall (X : Set) (u1 u2 : B -> X), f_comp u1 f === f_comp u2 f -> u1 === u2.
+  Definition mono (f : A -> B) := forall (X : Type) (u1 u2 : X -> A), f_comp f u1 === f_comp f u2 -> u1 === u2.
+  Definition epi (f : A -> B) := forall (X : Type) (u1 u2 : B -> X), f_comp u1 f === f_comp u2 f -> u1 === u2.
 
   Lemma mono_injection : forall f, mono f -> forall a1 a2, f a1 = f a2 -> a1 = a2.
   Proof.
@@ -62,7 +62,7 @@ Section Composition.
     
 End Composition.
 
-Lemma f_comp_id_R : forall {A B : Set} (f : A -> B), f_comp f id === f.
+Lemma f_comp_id_R : forall {A B : Type} (f : A -> B), f_comp f id === f.
 Proof.
   intros.
   unfold id.  
@@ -71,7 +71,7 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma f_comp_id_L : forall {A B : Set} (f : A -> B), f_comp id f === f.
+Lemma f_comp_id_L : forall {A B : Type} (f : A -> B), f_comp id f === f.
 Proof.
   intros.
   unfold id.  
@@ -85,7 +85,7 @@ Proof.
   auto.
 Qed.
 
-Lemma mono_id : forall {A : Set}, mono (@id A).
+Lemma mono_id : forall {A : Type}, mono (@id A).
 Proof.
   intro A.
   intros B u1 u2 eqH.
@@ -95,7 +95,7 @@ Proof.
   apply eqH.
 Qed.
 
-Lemma epi_id : forall {A : Set}, epi (@id A).
+Lemma epi_id : forall {A : Type}, epi (@id A).
 Proof.
   intro A.
   intros B u1 u2 eqH.
@@ -105,7 +105,7 @@ Proof.
   apply eqH.
 Qed.
 
-Definition isIsomorphism {A B : Set} (f1 : A -> B) (f2 : B -> A) :=
+Definition isIsomorphism {A B : Type} (f1 : A -> B) (f2 : B -> A) :=
   (f_comp f1 f2 === id) /\ (f_comp f2 f1 === id).
 
 Lemma de_morgan_nexists : forall {A} (P : A -> Prop), (~exists x, P x) -> forall x, ~P x.

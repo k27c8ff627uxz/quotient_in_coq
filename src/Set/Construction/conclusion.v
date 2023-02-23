@@ -10,7 +10,7 @@ Open Scope equiv_scope.
 Require Import ChoiceFacts ClassicalFacts.
 
 Definition weak_functional_extentionality
-  := forall (A : Set) (f1 f2 : A -> bool), (forall a, f1 a = f2 a) -> f1 = f2.
+  := forall (A : Type) (f1 f2 : A -> bool), (forall a, f1 a = f2 a) -> f1 = f2.
                                                    
 Section Conclution.
 

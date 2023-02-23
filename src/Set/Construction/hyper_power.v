@@ -88,10 +88,10 @@ Section HyperPower.
   End ClassicalFacts.
 
 
-  Definition singleton {A : Set} a : power A :=
+  Definition singleton {A : Type} a : power A :=
     to_power (fun a' => Prop2bool (a' = a)).
 
-  Lemma inSingleton : forall {A : Set} (a a' : A), of_power (singleton a) a' = true -> a' = a.
+  Lemma inSingleton : forall {A : Type} (a a' : A), of_power (singleton a) a' = true -> a' = a.
     intros A a a'.
     unfold singleton.
     rewrite of_to_power_eq.
@@ -100,7 +100,7 @@ Section HyperPower.
     assumption.
   Qed.
 
-  Lemma inSingleton_inv : forall {A : Set} (a a' : A), a' = a -> of_power (singleton a) a' = true.
+  Lemma inSingleton_inv : forall {A : Type} (a a' : A), a' = a -> of_power (singleton a) a' = true.
   Proof.
     intros A a a' eqa.
     unfold singleton.
@@ -109,21 +109,21 @@ Section HyperPower.
     assumption.
   Qed.
   
-  Lemma singleton_true : forall {A : Set} (a : A), of_power (singleton a) a = true.
+  Lemma singleton_true : forall {A : Type} (a : A), of_power (singleton a) a = true.
   Proof.
     intros A a.
     apply inSingleton_inv.
     reflexivity.
   Qed.    
   
-  Definition power_image {A B : Set} (f : A -> B) : power A -> power B :=
+  Definition power_image {A B : Type} (f : A -> B) : power A -> power B :=
     fun (S : power A) =>
       to_power (
           fun (b : B) => Prop2bool
                            (exists a, (of_power S a = true /\ f a = b))
                ).
   
-  Lemma power_image_of_power : forall {A B : Set} (f : A -> B) (pa : power A),
+  Lemma power_image_of_power : forall {A B : Type} (f : A -> B) (pa : power A),
       forall b, (of_power (power_image f pa) b = true) <-> (exists a, of_power pa a = true /\ f a = b).
   Proof.
     intros A B f S b.
@@ -147,7 +147,7 @@ Section HyperPower.
 
   Section Proof_preserve_reflexive_equalizer.
 
-    Lemma PfIf_eq_id : forall (A B : Set) (f : A -> B), mono f -> f_comp (power_f f) (power_image f) === id.
+    Lemma PfIf_eq_id : forall (A B : Type) (f : A -> B), mono f -> f_comp (power_f f) (power_image f) === id.
     Proof.
       intros A B f mono_f.
       intro pa.
@@ -184,18 +184,18 @@ Section HyperPower.
     Qed.
     
     
-    Definition pullback {A B C D : Set} (g1 : A -> B) (f1 : B -> D) (g2 : A -> C) (f2 : C -> D) :=
+    Definition pullback {A B C D : Type} (g1 : A -> B) (f1 : B -> D) (g2 : A -> C) (f2 : C -> D) :=
       f_comp f1 g1 === f_comp f2 g2 /\ (
-        forall (A' : Set) (g1' : A' -> B) (g2' : A' -> C),
+        forall (A' : Type) (g1' : A' -> B) (g2' : A' -> C),
           f_comp f1 g1' === f_comp f2 g2' ->
           exists u : A' -> A, g1' === f_comp g1 u /\ g2' === f_comp g2 u
       ).
     
-    Definition CPullback {X1 X2 Y : Set} (f1 : X1 -> Y) (f2 : X2 -> Y) :=
+    Definition CPullback {X1 X2 Y : Type} (f1 : X1 -> Y) (f2 : X2 -> Y) :=
       { p : X1 * X2 | f1 (fst p) = f2 (snd p) }.
     
     Lemma pullback_comm_in_image :
-      forall (Y1 Y2 X1 X2 : Set)
+      forall (Y1 Y2 X1 X2 : Type)
              (f : X1 -> X2) (g : Y1 -> Y2) (j : Y1 -> X1) (i : Y2 -> X2),
         pullback j f g i -> mono i -> mono j ->
         f_comp (power_f f) (power_image i) === f_comp (power_image j) (power_f g).
@@ -372,7 +372,7 @@ Section HyperPower.
 
     Section Proof_axiom_power_reflects_is_Lemmas.
 
-      Variable (A B : Set).
+      Variable (A B : Type).
       Variable (f : A -> B).
       Variable (m : power A -> power B).
       Variable mPf_eq_id : f_comp m (power_f f) === id.

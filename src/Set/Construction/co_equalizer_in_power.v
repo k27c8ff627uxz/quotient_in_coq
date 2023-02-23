@@ -52,7 +52,7 @@ Section Co_Equalizer_in_Power.
     
   Section IsEqualizerPowerEpsilon.
 
-    Variable A : Set.
+    Variable A : Type.
 
     Lemma PEPaEa_eq_PPEaEa : f_comp (power_epsilon (power (power A))) (power_epsilon A) === f_comp (power_f (power_f (power_epsilon A))) (power_epsilon A).
     Proof.
@@ -64,7 +64,7 @@ Section Co_Equalizer_in_Power.
       construct_equalizer
         (power_epsilon (power (power A)))
         (power_f (power_f (power_epsilon A))).
-    Definition L : Set :=
+    Definition L : Type :=
       equalizer_set _ _ Lkappa_equalizer.
     Definition kappa : L -> power (power A) :=
       equalizer_fun _ _ Lkappa_equalizer.

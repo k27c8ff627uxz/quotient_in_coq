@@ -15,13 +15,13 @@ Section CoequalizerExists.
   Context {instance_power_reflects_iso : axiom_power_reflects_iso}.    
   Context {instance_power_f_faithful : axiom_power_f_faithful}.
 
-  Context {B : Set}.
-  Context {A : Set}.
+  Context {B : Type}.
+  Context {A : Type}.
   Variable f g : B -> A.
 
   Definition Vtau_equalizer : equalizer (power_f f) (power_f g)
     := construct_equalizer _ _.
-  Definition V : Set :=
+  Definition V : Type :=
     equalizer_set _ _ Vtau_equalizer.
   Definition tau : V -> power A :=
     equalizer_fun _ _ Vtau_equalizer.
@@ -74,7 +74,7 @@ Section CoequalizerExists.
 
   Definition Cv_equalizer : equalizer (power_epsilon (power V)) (power_f h)
     := construct_equalizer _ _.
-  Definition C : Set :=
+  Definition C : Type :=
     equalizer_set _ _ Cv_equalizer.
   Definition v : C -> power V :=
     equalizer_fun _ _ Cv_equalizer.
@@ -133,7 +133,7 @@ Section CoequalizerExists.
   (* Uniqueness *)
   Section Exists_Arrow.
 
-    Variable D : Set.
+    Variable D : Type.
     Variable r : A -> D.
     Variable rf_eq_rg : f_comp r f === f_comp r g.
 

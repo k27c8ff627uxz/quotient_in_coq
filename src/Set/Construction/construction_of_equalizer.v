@@ -17,12 +17,12 @@ Section EqualizerExists.
 
   Context {instance_proof_irrelevance : axiom_proof_irrelevance}.
   
-  Context {A : Set}.
-  Context {B : Set}.
+  Context {A : Type}.
+  Context {B : Type}.
 
   Variable f1 f2 : B -> A.
   
-  Definition CEqualizer : Set:=
+  Definition CEqualizer : Type:=
     { b : B | f1 b = f2 b }.
 
   Definition CEqualizer_fun : CEqualizer -> B := fun c => proj1_sig c.
@@ -45,7 +45,7 @@ Section EqualizerExists.
       simpl.
       reflexivity.
     }
-    assert(eq_dep_eq_sig' : forall (U : Set) (P : U -> Prop) (p q : U) (x : P p) (y : P q),
+    assert(eq_dep_eq_sig' : forall (U : Type) (P : U -> Prop) (p q : U) (x : P p) (y : P q),
               eq_dep U P p x q y -> exist P p x = exist P q y).
     {
       intros U P p q x y.
@@ -68,7 +68,7 @@ Section EqualizerExists.
   
   Section EqualizerExists_Unq.
     
-    Context {C' : Set}.
+    Context {C' : Type}.
     Variable (g' : C' -> B).
     Variable eqgf : f_comp f1 g' === f_comp f2 g'.
     
