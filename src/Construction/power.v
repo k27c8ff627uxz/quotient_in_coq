@@ -10,7 +10,7 @@ Open Scope equiv_scope.
 Definition power_exists := forall (A : Type), quotient (A -> bool) _ (@pointwise_equivalence A _ eq _).
 Class axiom_power_exists :=
   {
-    proof_power_exists :> power_exists
+    proof_power_exists : power_exists
   }.
 
 Section Power.
@@ -272,15 +272,15 @@ Section Power.
 
   Class axiom_power_reflects_iso :=
     {
-      proof_power_reflects_iso :> power_reflects_iso
+      proof_power_reflects_iso : power_reflects_iso
     }.
   Class axiom_power_f_faithful :=
     {
-      proof_power_f_faithful :> power_f_faithful
+      proof_power_f_faithful : power_f_faithful
     }.
   Class axiom_preserve_reflexive_equalizer :=
     {
-      proof_preserve_reflexive_equalizer :> preserve_reflexive_equalizer
+      proof_preserve_reflexive_equalizer : preserve_reflexive_equalizer
     }.
 
 End Power.
