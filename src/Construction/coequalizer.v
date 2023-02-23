@@ -2,7 +2,7 @@
 Require Import Coq.Relations.Relation_Definitions.
 Require Import Coq.Classes.Equivalence.
 
-From Quotient.Set Require Import function_util quotient.
+From Quotient Require Import function_util quotient.
 Open Scope equiv_scope.
 
 Section Coequalizer.

@@ -2,7 +2,7 @@ Require Import Coq.Relations.Relation_Definitions.
 Require Export Coq.Classes.SetoidClass.
 Require Import Coq.Classes.Equivalence.
 
-Require Import Quotient.Set.function_util.
+Require Import Quotient.function_util.
 
 Open Scope equiv_scope.
 

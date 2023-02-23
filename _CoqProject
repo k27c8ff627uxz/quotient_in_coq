@@ -1,11 +1,11 @@
 -R src Quotient
-src/Set/function_util.v
-src/Set/quotient.v
-src/Set/Construction/equalizer.v
-src/Set/Construction/construction_of_equalizer.v
-src/Set/Construction/coequalizer.v
-src/Set/Construction/power.v
-src/Set/Construction/hyper_power.v
-src/Set/Construction/co_equalizer_in_power.v
-src/Set/Construction/construction_of_coequalizer.v
-src/Set/Construction/conclusion.v
+src/function_util.v
+src/quotient.v
+src/Construction/equalizer.v
+src/Construction/construction_of_equalizer.v
+src/Construction/coequalizer.v
+src/Construction/power.v
+src/Construction/hyper_power.v
+src/Construction/co_equalizer_in_power.v
+src/Construction/construction_of_coequalizer.v
+src/Construction/conclusion.v

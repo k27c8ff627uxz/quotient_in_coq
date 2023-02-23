@@ -3,8 +3,8 @@ Require Export Coq.Classes.SetoidClass.
 Require Import Coq.Classes.Equivalence.
 
 Require Import ChoiceFacts ClassicalFacts.
-From Quotient.Set Require Import function_util quotient.
-From Quotient.Set.Construction Require Import equalizer coequalizer power.
+From Quotient Require Import function_util quotient.
+From Quotient.Construction Require Import equalizer coequalizer power.
 
 Open Scope type_scope.
 
