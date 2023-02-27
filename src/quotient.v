@@ -6,7 +6,7 @@ Require Import Quotient.function_util.
 
 Open Scope equiv_scope.
 
-Record quotient@{i j} (A : Type@{i}) (rel : relation A) (eq : Equivalence rel) :=
+Record quotient@{i j} (A : Type@{i}) (setoid : Setoid A) :=
   {
     q_type :  Type@{i};
     q_proj : A -> q_type;
@@ -18,4 +18,4 @@ Record quotient@{i j} (A : Type@{i}) (rel : relation A) (eq : Equivalence rel) :
 
   }.
 
-Definition quotient_exists := forall (A : Type) (rel : relation A) (eqA : Equivalence rel), quotient A rel eqA.
+Definition quotient_exists := forall (A : Type) (setoid : Setoid A), quotient A setoid.

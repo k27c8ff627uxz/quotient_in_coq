@@ -7,7 +7,9 @@ From Quotient.Construction Require Import equalizer coequalizer.
 
 Open Scope equiv_scope.
 
-Definition power_exists := forall (A : Type), quotient (A -> bool) _ (@pointwise_equivalence A _ eq _).
+Program Definition power_setoid {A: Type} : Setoid (A -> bool) := {| setoid_equiv := @pointwise_equivalence A _ eq _ |}.
+
+Definition power_exists := forall (A : Type), quotient (A -> bool) power_setoid.
 Class axiom_power_exists :=
   {
     proof_power_exists : power_exists
@@ -17,8 +19,8 @@ Section Power.
 
   Context {instance_power_exists : axiom_power_exists}.
 
-  Definition power (A : Type) : Type := q_type _ _ _ (proof_power_exists A).
-  Definition to_power {A : Type} : (A -> bool) -> power A := q_proj _ _ _ (proof_power_exists A).
+  Definition power (A : Type) : Type := q_type _ _ (proof_power_exists A).
+  Definition to_power {A : Type} : (A -> bool) -> power A := q_proj _ _ (proof_power_exists A).
 
   Lemma epi_to_power {A} : epi (@to_power A).
   Proof.
@@ -27,8 +29,9 @@ Section Power.
 
   Global Instance to_power_Proper {A} : Proper (Equivalence.equiv ==> eq) (@to_power A).
   Proof.
-    intros f1 f2.
+    intros f1 f2 eqf1f2.
     apply quotient_comp.
+    assumption.
   Qed.
   
   Section Power_Univ.
@@ -39,7 +42,7 @@ Section Power.
     Variable F_proper : Proper (Equivalence.equiv ==> eq) F.
     
     Definition power_quotient_sig : {f : (power A) -> T | F === f_comp f to_power} :=
-      (quotient_factor _ _ _ (proof_power_exists A))
+      (quotient_factor _ _ (proof_power_exists A))
         F F_proper.
 
     Definition power_quotient_f : (power A) -> T := proj1_sig power_quotient_sig.

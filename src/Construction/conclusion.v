@@ -23,7 +23,7 @@ Section Conclution.
     split.
     unfold power_exists.
     intros.
-    apply (@Build_quotient _ _ _ (A -> bool) id).
+    apply (@Build_quotient _ _ (A -> bool) id).
     intros f1 f2 eqf.
     apply proof_weak_functional_extentionality in eqf.
     unfold id.

@@ -158,7 +158,7 @@ Definition coequalizer_exists := forall (A B : Type) (f1 f2 : A -> B), coequaliz
 Lemma coequalizer_exists__quotient_exists : coequalizer_exists -> quotient_exists.
 Proof.
   intros ce.
-  intros A relA eqA.
+  intros A setoid.
   specialize (ce { p : A * A | (fst p) === (snd p)}).
   specialize (ce A).
   specialize (ce (f_comp fst (@proj1_sig _ _))).
