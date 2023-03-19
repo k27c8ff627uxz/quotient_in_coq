@@ -1,6 +1,6 @@
 
 Require Import Coq.Classes.Equivalence.
-Require Import Quotient.function_util.
+From Quotient Require Import quotient Construction.function_util.
 Open Scope equiv_scope.
 
 Section Equalizer.

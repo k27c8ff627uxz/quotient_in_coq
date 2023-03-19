@@ -5,7 +5,6 @@ Require Export Coq.Classes.Equivalence.
 
 Open Scope equiv_scope.
 
-
 Section Composition.
 
   Section Composition_def.
