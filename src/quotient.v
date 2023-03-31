@@ -8,7 +8,7 @@ Definition f_comp {A B C : Type} (f : B -> C) (g : A -> B) : A -> C := fun a => 
 Definition mono {A B : Type} (f : A -> B) := forall (X : Type) (u1 u2 : X -> A), f_comp f u1 === f_comp f u2 -> u1 === u2.
 Definition epi {A B : Type} (f : A -> B) := forall (X : Type) (u1 u2 : B -> X), f_comp u1 f === f_comp u2 f -> u1 === u2.
 
-Record quotient@{i j k} (A : Type@{i}) (setoid : Setoid A) :=
+Polymorphic Record quotient@{i j} (A : Type@{i}) (setoid : Setoid A) :=
   {
     q_type :  Type@{i};
     q_proj : A -> q_type;
@@ -20,4 +20,4 @@ Record quotient@{i j k} (A : Type@{i}) (setoid : Setoid A) :=
 
   }.
 
-Definition quotient_exists := forall (A : Type) (setoid : Setoid A), quotient A setoid.
+Polymorphic Definition quotient_exists := forall (A : Type) (setoid : Setoid A), quotient A setoid.
